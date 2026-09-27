@@ -7,7 +7,6 @@ locals {
     for repo in var.github_repositories : {
       uid = replace("${repo.repo_name}|${repo.project_code}", " ", "-")
 
-
       # if repo_name is empty string then populate: 
       repo_name = "${local.company_code}-${local.repo_name_prefix}-${repo.project_code}"
       repo_url  = "<Update This Value>"
@@ -16,6 +15,7 @@ locals {
       project_code = repo.project_code
       repo_url     = repo.repo_url
       environments = repo.environments
+      repo_description = repo.repo_description
     }
   ])
 
