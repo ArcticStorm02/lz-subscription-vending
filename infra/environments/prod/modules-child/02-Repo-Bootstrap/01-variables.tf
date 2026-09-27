@@ -11,11 +11,12 @@ variable "github_repositories" {
   Each repository represents an Application Landing Zone and contains its
   associated environments.
 
-  Required attributes:
-    org_name      -> Name of the GitHub organization that owns the repository
+  Required attributes:   
+    
+    project_code  -> Short, unique project identifier (maximum 5 characters)
     repo_name     -> GitHub repository name. Must follow the pattern:
                      ihc-lz-<lowercase-name>
-    project_code  -> Short, unique project identifier (maximum 5 characters)
+    repo_description -> Brief description of the repository
     repo_url      -> URL of the GitHub repository
     environments  -> List of GitHub environments and their configuration
 
@@ -25,10 +26,10 @@ variable "github_repositories" {
   EOD
 
   type = list(object({
-    org_name     = string
-    repo_name    = string
-    project_code = string
-    repo_url     = string
+    project_code     = string
+    repo_name        = string
+    repo_description = string
+    repo_url         = string
 
     environments = list(object({
       environment_name = string

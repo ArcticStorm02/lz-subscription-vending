@@ -1,30 +1,15 @@
-
-
-# Approval Gate: 
-
-data "github_user" "current" {
-  username = "rs-rihc"
-}
-
-
-
+# Create the standard development branch for all Landing Zone repositories.
+#
+# The develop branch is created from the initialized main branch after the
+# repository bootstrap files have been committed.
 
 resource "github_branch" "develop_branch" {
-  repository    = github_repository.ihc_lz_repo.name
-  branch        = "develop"
+  for_each      = { for repo in local.github_repo_list : repo.uid => repo }
+  repository    = github_repository.landing_zone_repo[each.value.uid].name
+  branch        = "dev"
   source_branch = "main"
-
   depends_on = [
-    github_repository.ihc_lz_repo,
-    github_repository_environment.environments,
-    github_repository_file.readme
+    github_repository_file.readme,
+    github_repository_file.gitignore
   ]
 }
-
-# Not creating feature branch
-# resource "github_branch" "feature_branch" {
-#   repository    = github_repository.ihc_lz_repo.name
-#   branch        = "feature-InitialSetup"
-#   source_branch = "develop"
-#   depends_on = [ github_branch.develop_branch ]
-# }

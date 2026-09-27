@@ -1,126 +1,30 @@
+# Configure deployment protection settings for all repository environments.
+#
+# Required reviewers are resolved from GitHub usernames to GitHub user IDs.
+# The wait timer and reviewer configuration are sourced from tfvars.
 
-
-# Approval Gate: 
-
-# data "github_user" "current" {
-#   username = "rs-rihc"
-# }
-
-/*
-422 Failed to create the environment protection rule. 
-Please ensure the billing plan supports the required reviewers protection rule.
-*/
-
-/*
-
-resource "github_repository_environment" "dev" {
-  repository  = github_repository.ihc_lz_repo.name
-  environment = "Lz-INTG-Dev"
-
-  wait_timer = 15
-
-  can_admins_bypass   = true # Admin can bypass when when true
-  prevent_self_review = false # Self Review is allowed when False
-
- # the reviewers block corresponds to required reviewers checkbox 
-  reviewers { 
-    users = [
-      data.github_user.current.id
-    ]
+resource "github_repository_environment" "deployment_protection_rules" {
+  for_each = {
+    for rule in local.deployment_protection_rules_list :
+    rule.uid => rule
   }
-}
 
-resource "github_repository_environment" "acc" {
-  repository  = github_repository.ihc_lz_repo.name
-  environment = "Lz-INTG-Acc"
+  repository  = github_repository.landing_zone_repo[each.value.repo_uid].name
+  environment = each.value.environment
 
-  wait_timer = 15
+  wait_timer = each.value.wait_timer
 
   can_admins_bypass   = true
-  prevent_self_review = false # true
+  prevent_self_review = false
 
   reviewers {
     users = [
-      data.github_user.current.id
+      for username in each.value.required_reviewers_usernames :
+      data.github_user.reviewers[username].id
     ]
   }
+
+  depends_on = [
+    github_repository_environment.environments
+  ]
 }
-
-resource "github_repository_environment" "prod" {
-  repository  = github_repository.ihc_lz_repo.name
-  environment = "Lz-INTG-Prod"
-
-  wait_timer = 15
-
-  can_admins_bypass   = true
-  prevent_self_review = false # true
-
-  reviewers {
-    users = [
-      data.github_user.current.id
-    ]
-  }
-}
-
-*/ 
-
-
-
-
-
-/*
-422 Failed to create the environment protection rule. 
-Please ensure the billing plan supports the required reviewers protection rule.
-*/
-
-/*
-
-resource "github_repository_environment" "dev" {
-  repository  = github_repository.ihc_lz_repo.name
-  environment = "Lz-INTG-Dev"
-
-  wait_timer = 15
-
-  can_admins_bypass   = true
-  prevent_self_review = false # true
-
-  reviewers {
-    users = [
-      data.github_user.current.id
-    ]
-  }
-}
-
-resource "github_repository_environment" "acc" {
-  repository  = github_repository.ihc_lz_repo.name
-  environment = "Lz-INTG-Acc"
-
-  wait_timer = 15
-
-  can_admins_bypass   = true
-  prevent_self_review = false # true
-
-  reviewers {
-    users = [
-      data.github_user.current.id
-    ]
-  }
-}
-
-resource "github_repository_environment" "prod" {
-  repository  = github_repository.ihc_lz_repo.name
-  environment = "Lz-INTG-Prod"
-
-  wait_timer = 15
-
-  can_admins_bypass   = true
-  prevent_self_review = false # true
-
-  reviewers {
-    users = [
-      data.github_user.current.id
-    ]
-  }
-}
-
-*/ 

@@ -1,45 +1,31 @@
-
-
-# Need to use data sources for the Existing team
-
-/*
-data "github_team" "DevOps_Admins" {
-  slug = "RIHC-Azure-IaC-DevOps-Admins"
-}
-
-data "github_team" "DevOps_Developers" {
-  slug = "RIHC-Azure-IaC-DevOps-Developers"
-}
+# Assign existing GitHub teams to all Landing Zone repositories.
+#
+# DevOps_Admins:
+#   - Manage repository settings and policies
+#   - Manage environments
+#   - Approve releases
+#
+# DevOps_Developers:
+#   - Commit and push code
+#   - Create and manage pull requests
+#   - Merge pull requests
+#   - Run pipelines
+#
+# Teams are existing GitHub organization teams and are therefore referenced
+# through data sources rather than created by this module.
 
 resource "github_team_repository" "DevOps_Admins" {
+  for_each    = { for repo in local.github_repo_list : repo.uid => repo }
   team_id    = data.github_team.DevOps_Admins.id
-  repository = github_repository.ihc_lz_repo.name
+  repository = github_repository.landing_zone_repo[each.value.uid].name
   permission = "admin"
 }
 
 resource "github_team_repository" "DevOps_Developers" {
+  for_each    = { for repo in local.github_repo_list : repo.uid => repo }
   team_id    = data.github_team.DevOps_Developers.id
-  repository = github_repository.ihc_lz_repo.name
-  permission = "write" # GitHub's repository roles are: Read, Triage, Write = Push, Maintain, Admin.
-} 
+  repository = github_repository.landing_zone_repo[each.value.uid].name
+  permission = "push" # GitHub's repository roles are: Read, Triage, Write = Push, Maintain, Admin.
+}
 
-*/ 
-
-
-/*
-Reason: 
-
-Admins
-    Manage repo
-    Manage policies
-    Manage environments
-    Approve releases
-
-Developers
-    Commit code
-    Raise PRs
-    Merge PRs
-    Run pipelines
-
-*/
 

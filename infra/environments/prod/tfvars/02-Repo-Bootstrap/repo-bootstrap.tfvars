@@ -16,9 +16,9 @@ github_app_details = {
 
 github_repositories = [
   {
-
-    repo_name    = "ihc-lz-intg"                                      # If empty string then auto-interpolated by module
-    project_code = "INTG"                                             # AKA Landing Zone Code or Application Code, Max 5 Chars
+    project_code = "INTG" # AKA Landing Zone Code or Application Code, Max 5 Chars
+    repo_name    = "ihc-lz-intg" # If empty string then auto-interpolated by module
+    repo_description = "IHC Repository for INTG Landing Zone"
     repo_url     = "https://github.com/ArcticStorm02/ihc-lz-intg.git" # Just for sake of searching
     # Currently Creation of Secret 
     environments = [
