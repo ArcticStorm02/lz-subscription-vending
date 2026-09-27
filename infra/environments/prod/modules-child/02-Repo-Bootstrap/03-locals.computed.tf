@@ -12,7 +12,6 @@ locals {
       repo_name = "${local.company_code}-${local.repo_name_prefix}-${repo.project_code}"
       repo_url  = "<Update This Value>"
 
-      org_name     = repo.org_name
       repo_name    = repo.repo_name
       project_code = repo.project_code
       repo_url     = repo.repo_url
