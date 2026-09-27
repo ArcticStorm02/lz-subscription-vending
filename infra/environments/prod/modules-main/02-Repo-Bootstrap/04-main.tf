@@ -11,19 +11,16 @@
 
 
 # Repo Bootstrap
-
-module "repo_bootstrap" {
-  source            = "../../modules-child/02-Repo-Bootstrap"
-  # repository_list = var.repository_list
+  
+ module "repo_bootstrap" {
+  source = "../../modules-child/02-Repo-Bootstrap"
+  github_repo_list = var.github_repo_list
 
   providers = {
-   github = github
+    github = github
   }
 
   depends_on = [
     # Any Dependencies for this module
   ]
 }
-
-  
- 
