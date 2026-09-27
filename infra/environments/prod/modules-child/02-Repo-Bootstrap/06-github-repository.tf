@@ -5,6 +5,7 @@
 
 
 resource "github_repository" "ihc_lz_repo" {
+  for_each  = { for repo in local.subscription_list : sub.subscription_id => sub }
   name        = "ihc-lz-sprt"
   description = "SmartPort Repository"
 

@@ -19,10 +19,11 @@ resource "github_repository_environment" "dev" {
 
   wait_timer = 15
 
-  can_admins_bypass   = true
-  prevent_self_review = false # true
+  can_admins_bypass   = true # Admin can bypass when when true
+  prevent_self_review = false # Self Review is allowed when False
 
-  reviewers {
+ # the reviewers block corresponds to required reviewers checkbox 
+  reviewers { 
     users = [
       data.github_user.current.id
     ]
