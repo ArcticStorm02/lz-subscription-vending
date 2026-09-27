@@ -1,5 +1,5 @@
-name: Subscription Vending - Terraform Build
-run-name: "Subscription Vending - Terraform Build"
+name: Repo Bootstrap - Terraform Build
+run-name: "Repo Bootstrap - Terraform Build"
 
 on:
   push:
@@ -8,11 +8,11 @@ on:
       - develop
       - feature-*
     paths:
-      - "infra/environments/prod/modules-main/01-Subscription-Vending/**"
-      - "infra/environments/prod/modules-child/01-Subscription-Vending/**"
-      - "infra/environments/prod/init/01-Subscription-Vending/**"      
-      - "infra/environments/prod/tfvars/01-Subscription-Vending/**"
-      - ".github/workflows/build-subscription-vending.yml"
+      - "infra/environments/prod/modules-main/02-Repo-Bootstrap/**"
+      - "infra/environments/prod/modules-child/02-Repo-Bootstrap/**"
+      - "infra/environments/prod/init/02-Repo-Bootstrap/**"      
+      - "infra/environments/prod/tfvars/02-Repo-Bootstrap/**"
+      - ".github/workflows/build-repo-bootstrap.yml"
 
   workflow_dispatch: {}
   
@@ -32,9 +32,13 @@ jobs:
       ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
       ARM_SUBSCRIPTION_ID: ${{ vars.ARM_SUBSCRIPTION_ID }}
 
+      TF_VAR_GITHUB_APP_ID: ${{ vars.TF_VAR_GITHUB_APP_ID }}
+      TF_VAR_GITHUB_APP_INSTALLATION_ID: ${{ vars.TF_VAR_GITHUB_APP_INSTALLATION_ID }}
+      TF_VAR_GITHUB_APP_PRIVATE_KEY: ${{ secrets.TF_VAR_GITHUB_APP_PRIVATE_KEY }}
+
     # defaults:
     #   run:
-    #     working-directory: ./infra/environments/prod/modules-main/01-Subscription-Vending
+    #     working-directory: ./infra/environments/prod/modules-main/02-Repo-Bootstrap
 
 
     steps:
@@ -54,18 +58,18 @@ jobs:
           terraform_version: "1.13.3"
 
       - name: Terraform Version
-        working-directory: ./infra/environments/prod/modules-main/01-Subscription-Vending
+        working-directory: ./infra/environments/prod/modules-main/02-Repo
         run: terraform --version
 
       - name: Terraform Init
-        working-directory: ./infra/environments/prod/modules-main/01-Subscription-Vending
-        run: terraform init -backend-config="../../init/01-Subscription-Vending/subscription-vending.ini" -input=false
+        working-directory: ./infra/environments/prod/modules-main/02-Repo-Bootstrap
+        run: terraform init -backend-config="../../init/02-Repo-Bootstrap/repo-bootstrap.ini" -input=false
 
       - name: Terraform Validate
-        working-directory: ./infra/environments/prod/modules-main/01-Subscription-Vending
+        working-directory: ./infra/environments/prod/modules-main/02-Repo-Bootstrap
         run: terraform validate
 
       - name: Terraform Plan
-        working-directory: ./infra/environments/prod/modules-main/01-Subscription-Vending
-        run: terraform plan -input=false -out=tfplan -var-file='../../tfvars/01-Subscription-Vending/subscription-vending.tfvars'
+        working-directory: ./infra/environments/prod/modules-main/02-Repo-Bootstrap
+        run: terraform plan -input=false -out=tfplan -var-file='../../tfvars/02-Repo-Bootstrap/repo-bootstrap.tfvars'
       
