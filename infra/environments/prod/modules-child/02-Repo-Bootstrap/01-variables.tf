@@ -49,7 +49,7 @@ variable "github_repositories" {
 
   validation {
     condition = alltrue([
-      for repo in var.github_repo_list :
+      for repo in var.github_repositories :
       length(repo.project_code) <= 5
     ])
 
@@ -57,18 +57,18 @@ variable "github_repositories" {
   }
 
   validation {
-    condition     = alltrue([for repo in var.github_repo_list : can(regex("^ihc-lz-[a-z]+$", repo.repo_name))])
+    condition     = alltrue([for repo in var.github_repositories : can(regex("^ihc-lz-[a-z]+$", repo.repo_name))])
     error_message = "repo_name must follow the pattern 'ihc-lz-<lowercase-name>', for example 'ihc-lz-intg'."
   }
 
   validation {
-    condition     = alltrue([for repo in var.github_repo_list : can(regex("^https://github\\.com/[A-Za-z0-9_.-]+/ihc-lz-[a-z]+\\.git$", repo.repo_url))])
+    condition     = alltrue([for repo in var.github_repositories : can(regex("^https://github\\.com/[A-Za-z0-9_.-]+/ihc-lz-[a-z]+\\.git$", repo.repo_url))])
     error_message = "repo_url must be a valid GitHub HTTPS URL for an ihc-lz-* repository, for example 'https://github.com/Royal-IHC-BV/ihc-lz-intg.git'."
   }
 
   validation {
     condition = alltrue([
-      for repo in var.github_repo_list :
+      for repo in var.github_repositories :
       alltrue([
         for env in repo.environments :
         alltrue([

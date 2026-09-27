@@ -2,14 +2,26 @@
 
 # Organization Details
 variable "org_details" {
-  type = object(any)
+  description = "GitHub organization details."
+
+  type = object({
+    org_name = string
+    org_id   = string
+  })
 }
 
 # Github App Details
 # Not being used anywhere, just for the sake of finding it quick. 
 # Saves a lot of navigation time.
 variable "github_app_details" {
-  type = object(any)
+  description = "GitHub App authentication details."
+
+  type = object({
+    app_id          = string
+    installation_id = string
+    private_key     = string
+  })
+  sensitive = true
 }
 
 
