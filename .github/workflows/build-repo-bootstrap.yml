@@ -58,7 +58,7 @@ jobs:
           terraform_version: "1.13.3"
 
       - name: Terraform Version
-        working-directory: ./infra/environments/prod/modules-main/02-Repo
+        working-directory: ./infra/environments/prod/modules-main/02-Repo-Bootstrap
         run: terraform --version
 
       - name: Terraform Init
