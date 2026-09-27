@@ -20,7 +20,7 @@ output "repository_summary" {
   }
 }
 
-output "repository_count" {
+output "repo_bootstrap_count" {
   description = "Number of Landing Zone repositories created."
 
   value = length(local.github_repo_list)
