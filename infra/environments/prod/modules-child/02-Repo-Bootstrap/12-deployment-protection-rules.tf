@@ -2,9 +2,9 @@
 
 # Approval Gate: 
 
-data "github_user" "current" {
-  username = "rs-rihc"
-}
+# data "github_user" "current" {
+#   username = "rs-rihc"
+# }
 
 /*
 422 Failed to create the environment protection rule. 
