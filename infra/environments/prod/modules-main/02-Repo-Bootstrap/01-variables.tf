@@ -54,15 +54,15 @@ export TF_VAR_github_app_private_key=<your_github_app_private_key>
 
 */
 
-variable "github_app_id" {
+variable "GITHUB_APP_ID" {
   type = number
 }
 
-variable "github_app_installation_id" {
+variable "GITHUB_APP_INSTALLATION_ID" {
   type = number
 }
 
-variable "github_app_private_key" {
+variable "GITHUB_APP_PRIVATE_KEY" {
   type      = string
   sensitive = true
 }

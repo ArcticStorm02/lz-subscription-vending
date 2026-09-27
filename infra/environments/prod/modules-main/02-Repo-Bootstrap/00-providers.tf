@@ -15,8 +15,8 @@ terraform {
 provider "github" {
   owner = var.org_details.org_name # Github Org Name
   app_auth {
-    id              = var.github_app_id
-    installation_id = var.github_app_installation_id
-    pem_file        = var.github_app_private_key
+    id              = var.GITHUB_APP_ID
+    installation_id = var.GITHUB_APP_INSTALLATION_ID
+    pem_file        = var.GITHUB_APP_PRIVATE_KEY
   }
 }
