@@ -15,11 +15,9 @@ variable "org_details" {
 # Saves a lot of navigation time.
 variable "github_app_details" {
   description = "GitHub App authentication details."
-
   type = object({
     app_id          = string
     installation_id = string
-    private_key     = string
   })
   sensitive = true
 }
