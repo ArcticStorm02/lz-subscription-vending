@@ -1,0 +1,16 @@
+# Defines a sequence in which *.tf files should be renamed
+providers.tf
+variables.tf
+locals.constants.tf
+locals.computed.tf
+data-sources.tf
+main.tf
+github-repository.tf
+teams-role-assignments.tf
+repo-initialize.tf
+repo-branches.tf
+environments.tf
+environments-vars.tf
+deployment-protection-rules.tf
+branch-protection-ruleset.tf
+outputs.tf
