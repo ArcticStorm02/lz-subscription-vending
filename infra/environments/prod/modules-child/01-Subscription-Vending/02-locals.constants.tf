@@ -19,7 +19,8 @@ locals {
   # Magic Values / Constants: 
 
   # UUID of the Root Management Group
-  root_tenant_group_management_id = "20ceeb2a-a900-498e-92f1-9ae11e78295f"
+  # root_tenant_group_management_id = "20ceeb2a-a900-498e-92f1-9ae11e78295f"
+  root_tenant_group_management_id = "061bc4a2-a11e-446a-ad8e-c717e269679d"
 
   ## Decision: We use a central storage account for all the Terraform state management
   ## The state files and the blob container names must be per subscription environment. 
